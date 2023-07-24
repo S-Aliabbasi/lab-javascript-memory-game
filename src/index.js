@@ -45,11 +45,10 @@ window.addEventListener("load", (event) => {
   // 2-cheking cards pairing
   // 3-Reseting all cards
   function machingProcess(pickedCards) {
+    const firstPick = pickedCards[0].getAttribute("data-card-name");
+    const secondPick = pickedCards[1].getAttribute("data-card-name");
     if (
-      !memoryGame.checkIfPair(
-        pickedCards[0].getAttribute("data-card-name"),
-        pickedCards[1].getAttribute("data-card-name")
-      ) &&
+      !memoryGame.checkIfPair(firstPick, secondPick) &&
       !memoryGame.checkIfFinished()
     ) {
       memoryGame.pickedCards[0].classList.remove("turned");
@@ -72,9 +71,11 @@ window.addEventListener("load", (event) => {
         card.classList.add("turned");
       }
       if (memoryGame.pickedCards.length == 3 || memoryGame.pairsGuessed == 11) {
-        machingProcess(card);
-        document.getElementById("pairs-guessed").innerHTML = this.pairsGuessed;
-        document.getElementById("pairs-clicked").innerHTML = this.pairsClicked;
+        machingProcess(memoryGame.pickedCards);
+        document.getElementById("pairs-guessed").innerHTML =
+          memoryGame.pairsGuessed;
+        document.getElementById("pairs-clicked").innerHTML =
+          memoryGame.pairsClicked;
       }
 
       if (memoryGame.checkIfFinished()) {
